@@ -58,7 +58,7 @@ The model can be deployed using a lightweight web interface.
 
 ## Installation
 ```
-pip install tensorflow numpy matplotlib seaborn scikit-learn
+pip install -r requirements.txt
 ```
 
 ## Usage
