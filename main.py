@@ -9,11 +9,11 @@ MODEL_PATH = "skin_cancer_cnn.h5"
 
 if not os.path.exists(MODEL_PATH):
     url = "https://drive.google.com/uc?id=1AHLueZW7OmkMuWdA7MUtOgJ3ZvaTaDNL"
-    gdown.download(url, MODEL_PATH, quiet=True)
+    gdown.download(url, MODEL_PATH, quiet=True, fuzzy=True)
 
 @st.cache_resource
 def load_my_model():
-    return load_model(MODEL_PATH, compile=False)
+    return load_model(MODEL_PATH, compile=False, safe_mode=False)
 
 model = load_my_model()
 
@@ -48,7 +48,8 @@ st.markdown("""
 uploaded_image = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
 
 if uploaded_image is not None:
-    class_label, confidence, img = predict_skin_cancer(uploaded_image, model)
+    with st.spinner("Analyzing image..."):
+        class_label, confidence, img = predict_skin_cancer(uploaded_image, model)
 
     col1, col2 = st.columns([1, 1])
 
@@ -58,12 +59,12 @@ if uploaded_image is not None:
     with col2:
         if class_label == "Malignant":
             st.error(f"Prediction: {class_label}")
-            st.info(f"Confidence: {confidence * 100:.2f}%")
+            st.info(f"Confidence Score: {confidence * 100:.2f}%")
             st.warning("This may indicate a serious condition. Please consult a qualified dermatologist as soon as possible.")
             st.markdown("This is a precautionary note provided in the interest of safety.")
         else:
             st.success(f"Prediction: {class_label}")
-            st.info(f"Confidence: {confidence * 100:.2f}%")
+            st.info(f"Confidence Score: {confidence * 100:.2f}%")
             st.markdown("Looks harmless, but getting it checked is always a smart move.")
 
 st.subheader("About the Model:")
@@ -76,7 +77,7 @@ st.subheader("Features:")
 
 st.markdown("""
 - Input: Skin lesion images  
-- Output: Benign or Malignant classification with Confidence score 
+- Output: Benign or Malignant classification with confidence score  
 """)
 
 st.subheader("Disclaimer:")
@@ -87,6 +88,4 @@ It is not intended to replace professional medical advice, diagnosis, or treatme
 Always consult a qualified healthcare professional for any medical concerns.
 """)
 
-st.markdown("""
-****Developed with ❤️ by Siddhi Prasad Kale****
-""")
+st.markdown("— Developed with ❤️ by Siddhi Prasad Kale")
