@@ -3,7 +3,17 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
-model = load_model('skin_cancer_cnn.keras')
+import gdown
+import os
+from tensorflow.keras.models import load_model
+
+MODEL_PATH = "skin_cancer_cnn.keras"
+
+if not os.path.exists(MODEL_PATH):
+    url = "https://drive.google.com/uc?id=1o9yTKrFX9UyO1c0thpwrxoyV66fXLagt"
+    gdown.download(url, MODEL_PATH, quiet=False)
+
+model = load_model(MODEL_PATH)
 
 # Function to preprocess and predict the image
 def predict_skin_cancer(image_path, model):
