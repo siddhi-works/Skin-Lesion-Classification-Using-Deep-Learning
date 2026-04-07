@@ -5,13 +5,17 @@ import os
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
-MODEL_PATH = "skin_cancer_cnn.keras"
+MODEL_PATH = "skin_cancer_cnn.h5"
 
 if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1o9yTKrFX9UyO1c0thpwrxoyV66fXLagt"
-    gdown.download(url, MODEL_PATH, quiet=False)
+    url = "https://drive.google.com/uc?id=1AHLueZW7OmkMuWdA7MUtOgJ3ZvaTaDNL"
+    gdown.download(url, MODEL_PATH, quiet=True)
 
-model = load_model(MODEL_PATH)
+@st.cache_resource
+def load_my_model():
+    return load_model(MODEL_PATH, compile=False)
+
+model = load_my_model()
 
 def predict_skin_cancer(image_path, model):
     img = image.load_img(image_path, target_size=(224, 224))
