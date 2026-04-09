@@ -50,12 +50,6 @@ dataset/
 
 The model shows reliable performance in distinguishing between benign and malignant lesions with stable convergence.
 
-## Deployment
-The model can be deployed using a lightweight web interface.
-
-- Suggested: Streamlit / Flask  
-- Deployment Link: https://github.com/siddhi-works/Skin-Lesion-Classification-Using-Deep-Learning  
-
 ## Installation
 ```
 pip install -r requirements.txt
